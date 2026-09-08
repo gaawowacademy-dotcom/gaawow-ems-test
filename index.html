@@ -2,343 +2,902 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GAAWOW EMS - Admin Login</title>
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>GAAWOW EMS — Admin Login</title>
+
+  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
+      background:
+        linear-gradient(
+          135deg,
+          #0A2342 0%,
+          #0D47A1 55%,
+          #123B72 100%
+        );
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0A2342, #0D47A1);
       padding: 20px;
     }
 
-    .card {
+    .container {
       width: 100%;
-      max-width: 420px;
-      background: white;
-      border-radius: 18px;
-      padding: 30px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      max-width: 430px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 32px 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
     }
 
     .logo {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0D47A1;
+      color: #F4B400;
+      font-size: 25px;
+      font-weight: 800;
+      border: 4px solid #F4B400;
+    }
+
+    h1 {
       text-align: center;
-      margin-bottom: 10px;
+      color: #0A2342;
+      font-size: 25px;
+      margin-bottom: 5px;
     }
 
-    .logo h1 {
-      margin: 0;
-      color: #0D47A1;
-      font-size: 28px;
-    }
-
-    .logo p {
-      margin: 6px 0 25px;
+    .subtitle {
+      text-align: center;
       color: #666;
       font-size: 14px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #0A2342;
+      margin-bottom: 28px;
     }
 
     label {
       display: block;
-      margin-bottom: 7px;
+      color: #0A2342;
+      font-size: 14px;
       font-weight: bold;
-      color: #333;
+      margin-bottom: 7px;
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      margin-bottom: 18px;
-      border: 1px solid #ccc;
-      border-radius: 9px;
-      font-size: 16px;
+      height: 48px;
+      border: 1px solid #d6dbe2;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      margin-bottom: 17px;
     }
 
     input:focus {
-      outline: none;
       border-color: #0D47A1;
+      box-shadow: 0 0 0 3px rgba(13,71,161,0.10);
     }
 
     button {
       width: 100%;
-      padding: 14px;
+      height: 50px;
       border: none;
-      border-radius: 9px;
+      border-radius: 10px;
       background: #0D47A1;
-      color: white;
+      color: #ffffff;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0A367D;
     }
 
     button:disabled {
-      opacity: 0.6;
+      opacity: 0.65;
       cursor: not-allowed;
     }
 
-    #message {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 8px;
+    .message {
       display: none;
+      padding: 12px;
+      margin-top: 18px;
+      border-radius: 10px;
       font-size: 14px;
       line-height: 1.5;
     }
 
-    .success {
-      display: block !important;
-      background: #e8f5e9;
-      color: #1b5e20;
-    }
-
     .error {
-      display: block !important;
-      background: #ffebee;
-      color: #b71c1c;
+      display: block;
+      background: #fdecec;
+      color: #a61b1b;
+      border: 1px solid #f5b5b5;
     }
 
-    .info {
+    .success {
+      display: block;
+      background: #eaf8ef;
+      color: #146c35;
+      border: 1px solid #b9e3c6;
+    }
+
+    .status {
       margin-top: 20px;
-      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f5f7fa;
       font-size: 12px;
+      line-height: 1.5;
+      color: #444;
+      word-break: break-word;
+    }
+
+    .footer {
+      text-align: center;
       color: #777;
+      font-size: 12px;
+      margin-top: 22px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .dashboard {
+      text-align: center;
+    }
+
+    .dashboard-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .dashboard h2 {
+      color: #0A2342;
+      margin-bottom: 10px;
+    }
+
+    .dashboard p {
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .logout {
+      margin-top: 20px;
+      background: #C0392B;
+    }
+
+    .logout:hover {
+      background: #992D22;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="container">
+
+  <!-- LOGIN CARD -->
+  <div class="card" id="loginCard">
 
     <div class="logo">
-      <h1>GAAWOW EMS</h1>
-      <p>Ilayska Aqoonta iyo Xirfadda</p>
+      GA
     </div>
 
-    <h2>Super Admin Login</h2>
+    <h1>GAAWOW EMS</h1>
+
+    <div class="subtitle">
+      Education Management System
+    </div>
 
     <form id="loginForm">
 
-      <label for="email">Email</label>
+      <label for="email">
+        Email Address
+      </label>
+
       <input
         type="email"
         id="email"
-        placeholder="Enter your email"
-        value="gaawow12@hotmail.com"
+        placeholder="Enter admin email"
+        autocomplete="email"
         required
       >
 
-      <label for="password">Password</label>
+      <label for="password">
+        Password
+      </label>
+
       <input
         type="password"
         id="password"
-        placeholder="Enter your password"
+        placeholder="Enter password"
+        autocomplete="current-password"
         required
       >
 
-      <button type="submit" id="loginButton">
-        Login
+      <button
+        type="submit"
+        id="loginButton"
+      >
+        Sign In
       </button>
 
     </form>
 
-    <div id="message"></div>
+    <div
+      id="message"
+      class="message"
+    ></div>
 
-    <div class="info">
-      GAAWOW Academy • EMS V1.0
+    <div class="status">
+      <strong>System:</strong>
+      <span id="connectionStatus">
+        Checking Supabase connection...
+      </span>
+    </div>
+
+    <div class="footer">
+      GAAWOW Academy © 2026
     </div>
 
   </div>
 
+
+  <!-- DASHBOARD CARD -->
+  <div
+    class="card dashboard hidden"
+    id="dashboardCard"
+  >
+
+    <div class="dashboard-icon">
+      ✅
+    </div>
+
+    <h2>
+      Login Successful
+    </h2>
+
+    <p>
+      Welcome to GAAWOW EMS
+    </p>
+
+    <p>
+      <strong id="userEmail"></strong>
+    </p>
+
+    <p id="userRole">
+      Checking role...
+    </p>
+
+    <button
+      class="logout"
+      id="logoutButton"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
-  // ============================================================
-  // GAAWOW EMS — SUPABASE CONFIGURATION
-  // ============================================================
+
+  /* =====================================================
+     GAAWOW EMS — SUPABASE CONFIGURATION
+     ===================================================== */
 
   const SUPABASE_URL =
     "https://mujmcunlmkvtbjslaely.supabase.co";
 
-  // PASTE YOUR SUPABASE PUBLISHABLE KEY INSIDE THE QUOTES
+  /*
+    IMPORTANT:
+    Replace ONLY the value below with your
+    Supabase PUBLISHABLE KEY.
+
+    DO NOT use:
+    sb_secret_...
+
+    Use:
+    sb_publishable_...
+  */
+
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_0p_FEoWpmKo7g1uZNx4dzQ_6MKm80ef";
 
 
-  // ============================================================
-  // CREATE SUPABASE CLIENT
-  // ============================================================
+  /* =====================================================
+     CREATE SUPABASE CLIENT
+     ===================================================== */
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+  let supabaseClient = null;
+
+  const message =
+    document.getElementById("message");
+
+  const connectionStatus =
+    document.getElementById("connectionStatus");
+
+  const loginForm =
+    document.getElementById("loginForm");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+  const loginCard =
+    document.getElementById("loginCard");
+
+  const dashboardCard =
+    document.getElementById("dashboardCard");
+
+  const userEmail =
+    document.getElementById("userEmail");
+
+  const userRole =
+    document.getElementById("userRole");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
 
 
-  // ============================================================
-  // LOGIN
-  // ============================================================
+  /* =====================================================
+     MESSAGE FUNCTION
+     ===================================================== */
 
-  const form = document.getElementById("loginForm");
-  const button = document.getElementById("loginButton");
-  const message = document.getElementById("message");
+  function showMessage(text, type = "error") {
 
-  form.addEventListener("submit", async function(event) {
+    message.textContent = text;
 
-    event.preventDefault();
+    message.className =
+      "message " + type;
 
-    message.className = "";
-    message.style.display = "none";
+  }
+
+
+  function clearMessage() {
+
     message.textContent = "";
 
-    const email =
-      document.getElementById("email").value.trim();
+    message.className =
+      "message";
 
-    const password =
-      document.getElementById("password").value;
+  }
 
-    button.disabled = true;
-    button.textContent = "Logging in...";
+
+  /* =====================================================
+     VALIDATE CONFIGURATION
+     ===================================================== */
+
+  function validateConfiguration() {
+
+    if (!SUPABASE_URL) {
+
+      connectionStatus.textContent =
+        "Supabase URL is missing.";
+
+      return false;
+    }
+
+    if (
+      !SUPABASE_PUBLISHABLE_KEY ||
+      SUPABASE_PUBLISHABLE_KEY ===
+      "PASTE_YOUR_PUBLISHABLE_KEY_HERE"
+    ) {
+
+      connectionStatus.textContent =
+        "Publishable Key has not been added.";
+
+      showMessage(
+        "Supabase Publishable Key-ka wali lama gelin index.html."
+      );
+
+      return false;
+    }
+
+
+    /*
+      Check that this is the new publishable key format.
+    */
+
+    if (
+      !SUPABASE_PUBLISHABLE_KEY.startsWith(
+        "sb_publishable_"
+      )
+    ) {
+
+      connectionStatus.textContent =
+        "Invalid key format.";
+
+      showMessage(
+        "Key-ga waa inuu ku bilaabmaa sb_publishable_."
+      );
+
+      return false;
+    }
+
+    return true;
+  }
+
+
+  /* =====================================================
+     INITIALIZE SUPABASE
+     ===================================================== */
+
+  function initializeSupabase() {
+
+    if (!validateConfiguration()) {
+      return false;
+    }
 
     try {
 
-      // ----------------------------------------------------------
-      // 1. SUPABASE AUTH LOGIN
-      // ----------------------------------------------------------
+      supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
 
-      const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+      connectionStatus.textContent =
+        "Supabase client initialized.";
+
+      return true;
+
+    } catch (error) {
+
+      console.error(error);
+
+      connectionStatus.textContent =
+        "Supabase initialization failed.";
+
+      showMessage(
+        "Supabase lama bilaabi karin. Hubi Publishable Key-ga."
+      );
+
+      return false;
+    }
+  }
+
+
+  /* =====================================================
+     TEST SUPABASE CONNECTION
+     ===================================================== */
+
+  async function testConnection() {
+
+    if (!supabaseClient) {
+      return;
+    }
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient
+        .from("academy_profile")
+        .select("*")
+        .limit(1);
+
 
       if (error) {
-        throw new Error(error.message);
-      }
 
-      if (!data.user) {
-        throw new Error("Login failed: user not found.");
-      }
-
-
-      // ----------------------------------------------------------
-      // 2. GET PROFILE
-      // ----------------------------------------------------------
-
-      const { data: profile, error: profileError } =
-        await supabaseClient
-          .from("profiles")
-          .select("id, full_name, role, is_active")
-          .eq("id", data.user.id)
-          .single();
-
-      if (profileError) {
-        throw new Error(
-          "Login succeeded, but profile could not be loaded: " +
-          profileError.message
+        console.error(
+          "Supabase connection error:",
+          error
         );
+
+        /*
+          If table/RLS prevents reading,
+          the key may still be valid.
+        */
+
+        if (
+          error.message &&
+          error.message.toLowerCase()
+            .includes("invalid api key")
+        ) {
+
+          connectionStatus.textContent =
+            "INVALID API KEY";
+
+          showMessage(
+            "Invalid API key. Hubi in Publishable Key-ga uu ka yimid project-kan Supabase."
+          );
+
+        } else {
+
+          connectionStatus.textContent =
+            "Supabase connected.";
+
+        }
+
+        return;
       }
 
 
-      // ----------------------------------------------------------
-      // 3. CHECK ACTIVE ACCOUNT
-      // ----------------------------------------------------------
+      connectionStatus.textContent =
+        "Supabase connected successfully.";
 
-      if (!profile.is_active) {
+    } catch (error) {
 
-        await supabaseClient.auth.signOut();
+      console.error(error);
 
-        throw new Error(
-          "This account is inactive."
+      connectionStatus.textContent =
+        "Connection test failed.";
+
+    }
+  }
+
+
+  /* =====================================================
+     CHECK EXISTING SESSION
+     ===================================================== */
+
+  async function checkSession() {
+
+    if (!supabaseClient) {
+      return;
+    }
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth.getSession();
+
+
+      if (error) {
+
+        console.error(error);
+
+        return;
+      }
+
+
+      if (
+        data &&
+        data.session &&
+        data.session.user
+      ) {
+
+        await loadUserDashboard(
+          data.session.user
         );
+
       }
 
+    } catch (error) {
 
-      // ----------------------------------------------------------
-      // 4. CHECK SUPER ADMIN ROLE
-      // ----------------------------------------------------------
+      console.error(
+        "Session error:",
+        error
+      );
 
-      if (profile.role !== "super_admin") {
+    }
+  }
 
-        await supabaseClient.auth.signOut();
 
-        throw new Error(
-          "Access denied. Super Admin role is required."
+  /* =====================================================
+     LOGIN
+     ===================================================== */
+
+  loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      clearMessage();
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("password")
+          .value;
+
+
+      if (!email || !password) {
+
+        showMessage(
+          "Email iyo password geli."
         );
+
+        return;
       }
 
 
-      // ----------------------------------------------------------
-      // 5. SUCCESS
-      // ----------------------------------------------------------
+      loginButton.disabled = true;
 
-      message.className = "success";
+      loginButton.textContent =
+        "Signing in...";
 
-      message.innerHTML = `
-        <strong>LOGIN SUCCESSFUL ✓</strong><br><br>
-        Name: ${escapeHtml(profile.full_name)}<br>
-        Email: ${escapeHtml(data.user.email)}<br>
-        Role: ${escapeHtml(profile.role)}<br>
-        Active: ${profile.is_active ? "true" : "false"}
-      `;
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+        await supabaseClient.auth
+          .signInWithPassword({
+            email: email,
+            password: password
+          });
+
+
+        if (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+          showMessage(
+            error.message ||
+            "Login failed."
+          );
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "Sign In";
+
+          return;
+        }
+
+
+        if (
+          data &&
+          data.user
+        ) {
+
+          showMessage(
+            "Login successful.",
+            "success"
+          );
+
+          await loadUserDashboard(
+            data.user
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          "Login failed. Fadlan mar kale isku day."
+        );
+
+      }
+
+
+      loginButton.disabled = false;
+
+      loginButton.textContent =
+        "Sign In";
+
+    }
+  );
+
+
+  /* =====================================================
+     LOAD USER PROFILE / ROLE
+     ===================================================== */
+
+  async function loadUserDashboard(user) {
+
+    if (!user) {
+      return;
+    }
+
+
+    userEmail.textContent =
+      user.email || "";
+
+
+    try {
+
+      const {
+        data: profile,
+        error
+      } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "full_name, role, is_active"
+        )
+        .eq("id", user.id)
+        .single();
+
+
+      if (error) {
+
+        console.error(
+          "Profile error:",
+          error
+        );
+
+        userRole.textContent =
+          "Profile lama helin.";
+
+      } else {
+
+        userRole.innerHTML =
+          "<strong>Name:</strong> " +
+          (profile.full_name || "N/A") +
+          "<br>" +
+          "<strong>Role:</strong> " +
+          (profile.role || "N/A") +
+          "<br>" +
+          "<strong>Active:</strong> " +
+          (profile.is_active ? "Yes" : "No");
+
+
+        if (!profile.is_active) {
+
+          await supabaseClient.auth.signOut();
+
+          showMessage(
+            "Account-kan waa inactive."
+          );
+
+          return;
+        }
+
+
+        /*
+          For the first Super Admin test,
+          allow the dashboard.
+        */
+
+        if (
+          profile.role !==
+          "super_admin"
+        ) {
+
+          showMessage(
+            "Account-kan ma laha Super Admin role."
+          );
+
+          return;
+        }
+
+      }
+
+
+      loginCard.classList.add(
+        "hidden"
+      );
+
+      dashboardCard.classList.remove(
+        "hidden"
+      );
 
 
     } catch (error) {
 
       console.error(error);
 
-      let errorText = error.message || "Unknown error.";
-
-      if (
-        errorText.toLowerCase().includes("invalid api key")
-      ) {
-        errorText =
-          "Invalid API key. Please check that the Supabase Publishable Key in index.html is correct.";
-      }
-
-      message.className = "error";
-      message.textContent = "ERROR: " + errorText;
-
-    } finally {
-
-      button.disabled = false;
-      button.textContent = "Login";
+      showMessage(
+        "Profile-ka lama akhrin karin."
+      );
 
     }
+  }
 
-  });
+
+  /* =====================================================
+     LOGOUT
+     ===================================================== */
+
+  logoutButton.addEventListener(
+    "click",
+    async function() {
+
+      try {
+
+        const {
+          error
+        } =
+        await supabaseClient.auth
+          .signOut();
 
 
-  // ============================================================
-  // SECURITY — BASIC HTML ESCAPE
-  // ============================================================
+        if (error) {
 
-  function escapeHtml(value) {
+          console.error(error);
 
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+          showMessage(
+            "Logout failed."
+          );
+
+          return;
+        }
+
+
+        dashboardCard.classList.add(
+          "hidden"
+        );
+
+        loginCard.classList.remove(
+          "hidden"
+        );
+
+        document
+          .getElementById("password")
+          .value = "";
+
+        clearMessage();
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
+     START SYSTEM
+     ===================================================== */
+
+  async function startSystem() {
+
+    const initialized =
+      initializeSupabase();
+
+
+    if (!initialized) {
+      return;
+    }
+
+
+    await testConnection();
+
+    await checkSession();
 
   }
+
+
+  startSystem();
 
 </script>
 
