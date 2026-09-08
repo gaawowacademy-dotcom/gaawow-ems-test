@@ -1,270 +1,344 @@
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GAAWOW EMS - Login Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAAWOW EMS - Admin Login</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-* {
-box-sizing: border-box;
-font-family: Arial, sans-serif;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-margin: 0;
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-background: #0A2342;
-padding: 20px;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0A2342, #0D47A1);
+      padding: 20px;
+    }
 
-.box {
-width: 100%;
-max-width: 400px;
-background: white;
-padding: 30px;
-border-radius: 18px;
-box-shadow: 0 15px 40px rgba(0,0,0,.25);
-}
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
 
-h1 {
-text-align: center;
-color: #0B4DA2;
-margin-bottom: 5px;
-}
+    .logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-.subtitle {
-text-align: center;
-color: #666;
-margin-bottom: 25px;
-}
+    .logo h1 {
+      margin: 0;
+      color: #0D47A1;
+      font-size: 28px;
+    }
 
-label {
-display: block;
-margin: 15px 0 7px;
-font-weight: bold;
-}
+    .logo p {
+      margin: 6px 0 25px;
+      color: #666;
+      font-size: 14px;
+    }
 
-input {
-width: 100%;
-padding: 13px;
-border: 1px solid #ccc;
-border-radius: 8px;
-font-size: 16px;
-}
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0A2342;
+    }
 
-button {
-width: 100%;
-margin-top: 22px;
-padding: 14px;
-border: 0;
-border-radius: 8px;
-background: #0B4DA2;
-color: white;
-font-size: 16px;
-font-weight: bold;
-}
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+      color: #333;
+    }
 
-#result {
-margin-top: 20px;
-padding: 15px;
-border-radius: 8px;
-display: none;
-line-height: 1.6;
-}
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+      font-size: 16px;
+    }
 
-.success {
-display: block !important;
-background: #e8f7ee;
-color: #176b3a;
-}
+    input:focus {
+      outline: none;
+      border-color: #0D47A1;
+    }
 
-.error {
-display: block !important;
-background: #fdecec;
-color: #a32121;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #0D47A1;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.role {
-font-weight: bold;
-color: #0B4DA2;
-}
-</style>
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .success {
+      display: block !important;
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .error {
+      display: block !important;
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .info {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box">
+  <div class="card">
 
-<h1>GAAWOW EMS</h1>
+    <div class="logo">
+      <h1>GAAWOW EMS</h1>
+      <p>Ilayska Aqoonta iyo Xirfadda</p>
+    </div>
 
-<div class="subtitle">
-Supabase Login Test
-</div>
+    <h2>Super Admin Login</h2>
 
-<form id="loginForm">
+    <form id="loginForm">
 
-<label>Email</label>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        value="gaawow12@hotmail.com"
+        required
+      >
 
-<input
-type="email"
-id="email"
-value="gaawow12@hotmail.com"
-required
->
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        required
+      >
 
-<label>Password</label>
+      <button type="submit" id="loginButton">
+        Login
+      </button>
 
-<input
-type="password"
-id="password"
-placeholder="Enter password"
-required
->
+    </form>
 
-<button type="submit" id="loginBtn">
-Login
-</button>
+    <div id="message"></div>
 
-</form>
+    <div class="info">
+      GAAWOW Academy • EMS V1.0
+    </div>
 
-<div id="result"></div>
-
-</div>
+  </div>
 
 <script>
+  // ============================================================
+  // GAAWOW EMS — SUPABASE CONFIGURATION
+  // ============================================================
 
-const SUPABASE_URL =
-"https://mujmcunlmkvtbjslaely.supabase.co";
+  const SUPABASE_URL =
+    "https://mujmcunlmkvtbjslaely.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpleWdsd3plamN5dnByaGpwd212Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDY4NzcsImV4cCI6MjEwNDM4Mjg3N30.UKWwaEOaxRKJgvrJ3quoA2gMhbSEL_4jGiTP-9nZNZY";
-
-const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
-);
+  // PASTE YOUR SUPABASE PUBLISHABLE KEY INSIDE THE QUOTES
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_0p_FEoWpmKo7g1uZNx4dzQ_6MKm80ef";
 
 
-document
-.getElementById("loginForm")
-.addEventListener("submit", async function(e) {
+  // ============================================================
+  // CREATE SUPABASE CLIENT
+  // ============================================================
 
-e.preventDefault();
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
 
-const email =
-document.getElementById("email").value.trim();
 
-const password =
-document.getElementById("password").value;
+  // ============================================================
+  // LOGIN
+  // ============================================================
 
-const button =
-document.getElementById("loginBtn");
+  const form = document.getElementById("loginForm");
+  const button = document.getElementById("loginButton");
+  const message = document.getElementById("message");
 
-const result =
-document.getElementById("result");
+  form.addEventListener("submit", async function(event) {
 
-button.disabled = true;
-button.textContent = "Logging in...";
+    event.preventDefault();
 
-result.className = "";
-result.style.display = "none";
+    message.className = "";
+    message.style.display = "none";
+    message.textContent = "";
 
-try {
+    const email =
+      document.getElementById("email").value.trim();
 
-const { data: authData, error: authError } =
-await supabaseClient.auth.signInWithPassword({
-email: email,
-password: password
-});
+    const password =
+      document.getElementById("password").value;
 
-if (authError) {
-throw new Error(authError.message);
-}
+    button.disabled = true;
+    button.textContent = "Logging in...";
 
-const { data: profile, error: profileError } =
-await supabaseClient
-.from("profiles")
-.select("id, full_name, role, is_active")
-.eq("id", authData.user.id)
-.single();
+    try {
 
-if (profileError) {
-throw new Error(
-"Profile error: " + profileError.message
-);
-}
+      // ----------------------------------------------------------
+      // 1. SUPABASE AUTH LOGIN
+      // ----------------------------------------------------------
 
-if (!profile.is_active) {
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-await supabaseClient.auth.signOut();
+      if (error) {
+        throw new Error(error.message);
+      }
 
-throw new Error(
-"Account-kan waa disabled."
-);
-}
+      if (!data.user) {
+        throw new Error("Login failed: user not found.");
+      }
 
-if (profile.role !== "super_admin") {
 
-await supabaseClient.auth.signOut();
+      // ----------------------------------------------------------
+      // 2. GET PROFILE
+      // ----------------------------------------------------------
 
-throw new Error(
-"Role-ku ma aha super_admin. Role: " +
-profile.role
-);
-}
+      const { data: profile, error: profileError } =
+        await supabaseClient
+          .from("profiles")
+          .select("id, full_name, role, is_active")
+          .eq("id", data.user.id)
+          .single();
 
-result.className = "success";
+      if (profileError) {
+        throw new Error(
+          "Login succeeded, but profile could not be loaded: " +
+          profileError.message
+        );
+      }
 
-result.innerHTML =
-"<strong>✅ LOGIN SUCCESSFUL</strong><br><br>" +
-"<strong>Name:</strong> " +
-profile.full_name +
-"<br>" +
-"<strong>Email:</strong> " +
-authData.user.email +
-"<br>" +
-"<strong>Role:</strong> " +
-"<span class='role'>" +
-profile.role +
-"</span><br>" +
-"<strong>Active:</strong> " +
-profile.is_active +
-"<br><br>" +
-"🎉 Supabase Auth + Super Admin waa shaqeynayaan.";
 
-} catch (error) {
+      // ----------------------------------------------------------
+      // 3. CHECK ACTIVE ACCOUNT
+      // ----------------------------------------------------------
 
-result.className = "error";
+      if (!profile.is_active) {
 
-result.textContent =
-"❌ " + error.message;
+        await supabaseClient.auth.signOut();
 
-} finally {
+        throw new Error(
+          "This account is inactive."
+        );
+      }
 
-button.disabled = false;
-button.textContent = "Login";
 
-}
+      // ----------------------------------------------------------
+      // 4. CHECK SUPER ADMIN ROLE
+      // ----------------------------------------------------------
 
-});
+      if (profile.role !== "super_admin") {
+
+        await supabaseClient.auth.signOut();
+
+        throw new Error(
+          "Access denied. Super Admin role is required."
+        );
+      }
+
+
+      // ----------------------------------------------------------
+      // 5. SUCCESS
+      // ----------------------------------------------------------
+
+      message.className = "success";
+
+      message.innerHTML = `
+        <strong>LOGIN SUCCESSFUL ✓</strong><br><br>
+        Name: ${escapeHtml(profile.full_name)}<br>
+        Email: ${escapeHtml(data.user.email)}<br>
+        Role: ${escapeHtml(profile.role)}<br>
+        Active: ${profile.is_active ? "true" : "false"}
+      `;
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      let errorText = error.message || "Unknown error.";
+
+      if (
+        errorText.toLowerCase().includes("invalid api key")
+      ) {
+        errorText =
+          "Invalid API key. Please check that the Supabase Publishable Key in index.html is correct.";
+      }
+
+      message.className = "error";
+      message.textContent = "ERROR: " + errorText;
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "Login";
+
+    }
+
+  });
+
+
+  // ============================================================
+  // SECURITY — BASIC HTML ESCAPE
+  // ============================================================
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
 
 </script>
 
